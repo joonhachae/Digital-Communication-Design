@@ -33,6 +33,8 @@ export function advanceWheel(wheel,dt,g,heightCm,time,reducedMotion=false) {
   if(wheel.x>g.width+g.radius*2){wheel.x=-g.radius*1.4;wheel.laps++;wheel.blocked=false;}
   const age=time-wheel.hitTime;
   const recoil=wheel.blocked&&!reducedMotion&&age<.65?-Math.sin(age*22)*Math.exp(-age*7)*4:0;
-  wheel.y=supportY(wheel.x,g.curbX,g.ground,g.radius,height);
+  // A blocked wheel stays on the lower road. Do not evaluate the climbing
+  // arc at the contact boundary: floating-point error can lift it onto a tall curb.
+  wheel.y=wheel.blocked?g.ground-g.radius:supportY(wheel.x,g.curbX,g.ground,g.radius,height);
   return {x:wheel.x+recoil,y:wheel.y,angle:wheel.angle+recoil/g.radius,blocked:wheel.blocked};
 }
