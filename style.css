@@ -108,5 +108,13 @@ footer { border-top: 1px solid var(--ink); display: grid; grid-template-columns:
   .camera-prompt button span { margin-left: 8px; }
 }
 /* Keep the native pointer; the halo never captures clicks or covers touch UI. */
-#cursor-halo { position: fixed; top: 0; left: 0; width: 42px; height: 42px; border-radius: 50%; background: rgba(255,255,255,.28); pointer-events: none; z-index: 9999; opacity: 0; }
+#cursor-halo { position: fixed; top: 0; left: 0; width: 42px; height: 42px; border-radius: 50%; background: #fff; mix-blend-mode: difference; pointer-events: none; z-index: 9999; opacity: 0; }
 @media (hover: none), (pointer: coarse) { #cursor-halo { display: none; } }
+
+/* Suppress native video play overlays; the explicit camera action owns startup. */
+.camera.awaiting-camera video { visibility: hidden; }
+video { pointer-events: none; }
+video::-webkit-media-controls,
+video::-webkit-media-controls-enclosure,
+video::-webkit-media-controls-panel,
+video::-webkit-media-controls-start-playback-button { display: none !important; -webkit-appearance: none; }
