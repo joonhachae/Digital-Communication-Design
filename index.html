@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#d4ff00">
+<meta name="description" content="An interactive experiment in gesture, curb height, and wheelchair accessibility.">
+<title>How high is a barrier?</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<svg width="0" height="0" aria-hidden="true" style="position:absolute;pointer-events:none"><defs>
+<filter id="camera-duotone" color-interpolation-filters="sRGB">
+<feColorMatrix type="saturate" values="0"/>
+<feComponentTransfer><feFuncR type="table" tableValues="0.43922 0.83137"/><feFuncG type="table" tableValues="0.12549 1"/><feFuncB type="table" tableValues="1 0"/></feComponentTransfer>
+</filter>
+<filter id="camera-barrier" color-interpolation-filters="sRGB">
+<feColorMatrix type="saturate" values="0"/>
+<feComponentTransfer><feFuncR type="table" tableValues="0.03137 0.83137"/><feFuncG type="table" tableValues="0.03137 1"/><feFuncB type="table" tableValues="0.03137 0"/></feComponentTransfer>
+</filter></defs></svg>
+<main>
+<header aria-hidden="true"></header>
+<section class="intro">
+<div class="title-block">
+<h1>HOW HIGH<br>IS A BARRIER<span class="question">?</span></h1>
+<div class="intro-description">
+<p>A 5 cm curb is already difficult for many powered wheelchairs to overcome, and even greater heights can make movement much more challenging.</p>
+<p>Adjust the curb height with the space between your fingers and experience how a small difference in height can become a barrier.</p>
+</div>
+</div>
+<div class="camera-column">
+<div class="camera-label"><span id="tracking-status">CAMERA OFF</span></div>
+<div class="camera" id="camera">
+<video id="video" autoplay playsinline muted aria-label="Mirrored webcam feed"></video>
+<canvas id="hand-overlay" aria-label="Thumb and index finger measurement"></canvas>
+<div class="camera-prompt" id="camera-prompt"><p id="camera-message">YOUR HAND SETS THE HEIGHT.</p><button id="start-camera">ENABLE CAMERA <span>↗</span></button></div>
+</div>
+<div class="camera-caption"><span>PINCH TO LOWER. OPEN TO RAISE.</span><span>LIVE / 0—10 CM</span></div>
+</div>
+</section>
+<section class="experiment" aria-label="Powered wheelchair wheel approaching a variable curb">
+<div class="state-line"><div class="state" id="state">PASSABLE<span class="state-arrow" id="state-symbol">↗</span></div></div>
+<canvas id="scene" role="img" aria-label="Wheel and curb simulation"></canvas>
+</section>
+<p class="sr-only" id="announcement" aria-live="polite"></p>
+</main>
+<script type="module" src="app.js"></script>
+</body></html>
