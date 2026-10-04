@@ -98,7 +98,7 @@ function stopCamera(){
   cameraGeneration++;ready=false;busy=false;state.tracking=false;
   if(worker){worker.terminate();worker=null;}if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}video.srcObject=null;
 }
-function cameraError(message){stopCamera();$('camera-prompt').hidden=false;$('camera-message').textContent=message;$('start-camera').disabled=false;$('start-camera').innerHTML='TRY CAMERA AGAIN <span>↗</span>';$('tracking-status').textContent='CAMERA UNAVAILABLE';}
+function cameraError(message){stopCamera();$('camera').classList.add('awaiting-camera');$('camera-prompt').hidden=false;$('camera-message').textContent=message;$('start-camera').disabled=false;$('start-camera').innerHTML='TRY CAMERA AGAIN <span>↗</span>';$('tracking-status').textContent='CAMERA UNAVAILABLE';}
 function initializeTracker(){
   return new Promise((resolve,reject)=>{
     worker=new Worker('./hand-worker.js');
@@ -123,7 +123,7 @@ $('start-camera').addEventListener('click',async()=>{
     $('camera-message').textContent='LOADING HAND TRACKING…';
     await initializeTracker();
     stream.getVideoTracks()[0].addEventListener('ended',()=>cameraError('Camera disconnected. Reconnect it and retry.'));
-    ready=true;state.started=true;$('camera-prompt').hidden=true;$('tracking-status').textContent='SHOW ONE HAND';
+    ready=true;state.started=true;$('camera').classList.remove('awaiting-camera');$('camera-prompt').hidden=true;$('tracking-status').textContent='SHOW ONE HAND';
   }catch(error){const messages={NotAllowedError:'Camera access was denied. Allow access in your browser, then retry.',NotFoundError:'No camera found. Connect a camera and retry.',NotReadableError:'Camera is busy. Close other camera apps and retry.'};cameraError(messages[error.name]||error.message);}
 });
 async function submitFrame(now){
@@ -140,3 +140,13 @@ function animate(now){
 window.addEventListener('pagehide',stopCamera);
 window.addEventListener('pageshow',event=>{if(event.persisted)cameraError('Camera paused. Enable it to continue.');});
 requestAnimationFrame(animate);
+
+// Lightweight mouse-only cursor halo, hidden when the pointer leaves the page.
+const cursorHalo = $('cursor-halo');
+window.addEventListener('pointermove', event => {
+  if (event.pointerType !== 'mouse') { cursorHalo.style.opacity = '0'; return; }
+  cursorHalo.style.transform = `translate3d(${event.clientX - 21}px, ${event.clientY - 21}px, 0)`;
+  cursorHalo.style.opacity = '1';
+}, {passive: true});
+document.documentElement.addEventListener('pointerleave', () => { cursorHalo.style.opacity = '0'; });
+window.addEventListener('blur', () => { cursorHalo.style.opacity = '0'; });

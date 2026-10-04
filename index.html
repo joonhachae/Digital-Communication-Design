@@ -30,10 +30,10 @@
 </div>
 <div class="camera-column">
 <div class="camera-label"><span id="tracking-status">CAMERA OFF</span></div>
-<div class="camera" id="camera">
+<div class="camera awaiting-camera" id="camera">
 <video id="video" autoplay playsinline muted aria-label="Mirrored webcam feed"></video>
 <canvas id="hand-overlay" aria-label="Thumb and index finger measurement"></canvas>
-<div class="camera-prompt" id="camera-prompt"><p id="camera-message">YOUR HAND SETS THE HEIGHT.</p><button id="start-camera">ENABLE CAMERA <span>↗</span></button></div>
+<div class="camera-prompt" id="camera-prompt"><p id="camera-message">START HERE · USE YOUR HAND</p><button id="start-camera">ENABLE CAMERA <span>↗</span></button></div>
 </div>
 <div class="camera-caption"><span>PINCH TO LOWER. OPEN TO RAISE.</span><span>LIVE / 0—10 CM</span></div>
 </div>
@@ -44,5 +44,6 @@
 </section>
 <p class="sr-only" id="announcement" aria-live="polite"></p>
 </main>
+<div id="cursor-halo" aria-hidden="true"></div>
 <script type="module" src="app.js"></script>
 </body></html>
