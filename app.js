@@ -20,7 +20,7 @@ function sizeCanvas(canvas){
 function resize(){
   const old=geometry,{width,height}=sizeCanvas(scene);sizeCanvas(overlay);
   const radius=Math.min(clamp(width*.062,28,88),Math.max(22,(height-60)*.23));
-  geometry={width,height,curbX:width*.73,ground:height-24,radius,
+  geometry={width,height,curbX:width*.73,ground:height-44,radius,
     pxPerCm:Math.min(clamp(width*.012,5,16),Math.max(2,(height-2*radius-45)/10))};
   wheel.x=old?wheel.x/old.width*width:geometry.radius*1.6;
 }
