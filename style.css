@@ -8,7 +8,7 @@
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--paper); color: var(--ink); font-family: Arial, Helvetica, sans-serif; }
 /* The scene receives remaining viewport space, instead of adding its own height. */
-main { height: 100svh; min-height: 580px; padding: 0 var(--gutter); display: grid; grid-template-rows: auto auto minmax(0, 1fr); }
+main { isolation: isolate; height: 100svh; min-height: 580px; padding: 0 var(--gutter); display: grid; grid-template-rows: auto auto minmax(0, 1fr); }
 header { display: flex; justify-content: space-between; gap: 16px; padding: 19px 0 15px; border-bottom: 1px solid var(--ink); font-size: 11px; letter-spacing: .09em; font-weight: 700; }
 .intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(220px, 25%); gap: 4vw; align-items: start; padding-top: clamp(20px, 4vh, 42px); }
 h1 { font-size: clamp(54px, min(7.9vw, 12vh), 128px); line-height: .91; letter-spacing: -.075em; margin: 0; font-weight: 800; }
@@ -118,3 +118,5 @@ video::-webkit-media-controls,
 video::-webkit-media-controls-enclosure,
 video::-webkit-media-controls-panel,
 video::-webkit-media-controls-start-playback-button { display: none !important; -webkit-appearance: none; }
+
+/* The cursor blends with objects inside main; the body background stays outside its isolated layer. */
